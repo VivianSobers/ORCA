@@ -1,3 +1,6 @@
+import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
@@ -173,5 +176,15 @@ describe('detect stage', () => {
     await expect(detectPackageManager(fixture('mern-repo/server'))).resolves.toBe('npm');
     await expect(detectPackageManager(fixture('django-postgres-repo'))).resolves.toBe('pip');
     await expect(detectPackageManager(fixture('unsupported-repo'))).resolves.toBe('unknown');
+  });
+
+  it('does not classify uv from pyproject metadata alone without uv.lock', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'orca-pm-'));
+    try {
+      await writeFile(join(dir, 'pyproject.toml'), '[tool.uv]\npackage = true\n', 'utf8');
+      await expect(detectPackageManager(dir)).resolves.toBe('unknown');
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
   });
 });

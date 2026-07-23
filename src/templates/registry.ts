@@ -33,8 +33,9 @@ function dependencyFilesFor(pm: PackageManager): string[] {
     case 'pip':
       return ['requirements.txt'];
     case 'poetry':
-    case 'uv':
       return ['pyproject.toml'];
+    case 'uv':
+      return ['pyproject.toml', 'uv.lock'];
   }
 }
 
@@ -51,7 +52,7 @@ function installCommandFor(pm: PackageManager): string {
     case 'poetry':
       return 'poetry install';
     case 'uv':
-      return 'uv sync --frozen';
+      return 'pip install uv && uv sync --frozen --no-install-project';
   }
 }
 

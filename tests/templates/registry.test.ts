@@ -140,6 +140,12 @@ describe('defaultDockerfileVars', () => {
     );
     expect(poetry.installCommand).toBe('poetry install');
     expect(poetry.dependencyFiles).toEqual(['pyproject.toml']);
+
+    const uv = defaultDockerfileVars(
+      component({ language: 'python', framework: 'django', packageManager: 'uv' })
+    );
+    expect(uv.installCommand).toBe('pip install uv && uv sync --frozen --no-install-project');
+    expect(uv.dependencyFiles).toEqual(['pyproject.toml', 'uv.lock']);
   });
 
   it('falls back to framework default ports when none were detected', () => {

@@ -1,8 +1,8 @@
 /**
  * Composition point for the recipe registry: the Node/Python framework recipes, the
  * seed stacks (React/Express/Django), the generic Vite bundler, and the Phase-B
- * ecosystem recipes (Go/Rust/JVM/.NET). `defaultRecipeRegistry()` is what the pipeline
- * uses; tests can build narrower registries from the exported entry lists.
+ * ecosystem recipes (Go/Rust/JVM/.NET). Tests can build narrower registries from the
+ * exported entry lists.
  *
  * ORDER IS BEHAVIOR. `RecipeRegistry.match` returns the FIRST satisfied matcher, so
  * this list is strictly most-specific-first:
@@ -46,7 +46,7 @@ export const ALL_RECIPES = [
   ...SCRIPTING_RECIPES,
 ];
 
-/** The registry the pipeline uses: every shipped recipe, in priority order. */
+/** The default shipped registry: every recipe in the priority order above. */
 export function defaultRecipeRegistry(): RecipeRegistry {
   return new RecipeRegistry(ALL_RECIPES);
 }
