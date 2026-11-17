@@ -234,6 +234,7 @@ ESM only TypeScript on `NodeNext` resolution, so intra project imports carry exp
 showing what's done and what's free to pick up. The design document behind the detection
 engine is [`docs/universal-understanding-plan.md`](docs/universal-understanding-plan.md).
 
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
